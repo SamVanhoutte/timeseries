@@ -1,15 +1,21 @@
-﻿namespace Meterdata;
-
-using System;
-using System.Globalization;
-using System.IO;
+﻿using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
+using Meterdata.Extensions;
+
+namespace Meterdata.Parsers;
 
 public class LondonMeterfileParser : IMeterfileParser
 {
-    public async Task ParseMeterDataAsync(string filePath, Func<MeterReading, Task> processData)
+    // Last timestamp of dataset , all times will be shifted towards current day
+    private const string FirstTimeStamp = "2011-11-24T00:00:00Z";
+    private const string LastTimeStamp = "2013-02-25T00:00:00Z";
+    
+    public async Task<(long, long)> ParseMeterDataAsync(string filePath, Func<MeterReading, Task> processData)
     {
+        var totalRecords = 0;
+        var totalInfiniteValues = 0;
+        var daysToShift = (int)DateTime.UtcNow.Subtract( DateTime.ParseExact(LastTimeStamp, "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal)).TotalDays;
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             HasHeaderRecord = true, // Set to true if your CSV has a header row
@@ -35,7 +41,9 @@ public class LondonMeterfileParser : IMeterfileParser
             {
                 if (!string.IsNullOrEmpty(meterId))
                 {
-                    var day = DateTime.ParseExact(dayValue, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    var fileDay = DateTime.ParseExact(dayValue, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    // Shift data here
+                    var day = fileDay.AddDays(daysToShift);
                     var reading = new MeterReading { MeterId = meterId, Readings = new (DateTime, double)[48] };
                     for (int hhr = 1; hhr <= 48; hhr++)
                     {
@@ -48,10 +56,13 @@ public class LondonMeterfileParser : IMeterfileParser
                             break;
                         }
                     }
+                    totalRecords+= reading.Readings.Length;
+                    totalInfiniteValues+= reading.Readings.Count(r => r.Timestamp.IsInfiniteOrEmpty());
 
                     await processData(reading);
                 }
             }
         }
+        return (totalRecords, totalInfiniteValues);
     }
 }

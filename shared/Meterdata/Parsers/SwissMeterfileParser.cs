@@ -1,15 +1,16 @@
-﻿namespace Meterdata;
-
-using System;
-using System.Globalization;
-using System.IO;
+﻿using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
+using Meterdata.Extensions;
+
+namespace Meterdata.Parsers;
 
 public class SwissMeterfileParser : IMeterfileParser
 {
-    public async Task ParseMeterDataAsync(string filePath, Func<MeterReading, Task> processData)
+    public async Task<(long, long)> ParseMeterDataAsync(string filePath, Func<MeterReading, Task> processData)
     {
+        var totalRecords = 0;
+        var totalInfiniteValues = 0;
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             HasHeaderRecord = true, // Set to true if your CSV has a header row
@@ -45,10 +46,12 @@ public class SwissMeterfileParser : IMeterfileParser
                             break;
                         }
                     }
-
+                    totalRecords+= reading.Readings.Length;
+                    totalInfiniteValues+= reading.Readings.Count(r => r.Timestamp.IsInfiniteOrEmpty());
                     await processData(reading);
                 }
             }
         }
+        return (totalRecords, totalInfiniteValues);
     }
 }

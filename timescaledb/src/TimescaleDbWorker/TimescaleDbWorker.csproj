@@ -4,12 +4,12 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <UserSecretsId>dotnet-InfluxDbWorker-59989e8c-e40b-4a16-a5e3-b559f254c0bd</UserSecretsId>
+        <UserSecretsId>dotnet-TimescaleDbWorker-59989e8c-e40b-4a16-a5e3-b559f254c0bd</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="InfluxDB.Client" Version="4.18.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.1"/>
+        <PackageReference Include="Npgsql" Version="9.0.3" />
     </ItemGroup>
 
     <ItemGroup>

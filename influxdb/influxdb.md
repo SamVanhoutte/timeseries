@@ -13,3 +13,8 @@ docker compose up influxdb2
 ## Administer and manage InfluxDb
 
 Just navigate to http://localhost:8086/ and login with your credentials
+
+## Main concepts
+
+- **Buckets**: A bucket is a named location where time series data is stored. All buckets have a Retention Policy, a duration of time that each data point persists.
+- 

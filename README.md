@@ -6,6 +6,7 @@ A repo comparing different time series databases
 
 I am using the following data sets in the samples: 
 
-- https://www.kaggle.com/datasets/jeanmidev/smart-meters-in-london
-- https://www.kaggle.com/datasets/pythonafroz/swiss-smart-meter-data?resource=download
+- https://www.kaggle.com/datasets/pythonafroz/swiss-smart-meter-data?resource=download (I only focused on the )
 
+Another relevant data set can be the following: 
+- https://www.kaggle.com/datasets/jeanmidev/smart-meters-in-london

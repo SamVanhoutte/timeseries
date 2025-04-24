@@ -4,6 +4,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfluxDbWorker", "influxdb\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meterdata", "shared\Meterdata\Meterdata.csproj", "{B95862F6-CEF1-473F-AA2A-1B8ACE6EE009}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimescaleDbWorker", "timescaledb\src\TimescaleDbWorker\TimescaleDbWorker.csproj", "{F41E4E15-D8DF-444B-AB63-7AE17CE9868F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeseriesWorker", "shared\TimeseriesWorker\TimeseriesWorker.csproj", "{26BDBA76-496B-42E1-B488-393F9FEE9904}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResultParser", "shared\ResultParser\ResultParser.csproj", "{D5C98F40-A0C4-4B10-9E40-E42EC424CE16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +24,17 @@ Global
 		{B95862F6-CEF1-473F-AA2A-1B8ACE6EE009}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B95862F6-CEF1-473F-AA2A-1B8ACE6EE009}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B95862F6-CEF1-473F-AA2A-1B8ACE6EE009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F41E4E15-D8DF-444B-AB63-7AE17CE9868F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F41E4E15-D8DF-444B-AB63-7AE17CE9868F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F41E4E15-D8DF-444B-AB63-7AE17CE9868F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F41E4E15-D8DF-444B-AB63-7AE17CE9868F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26BDBA76-496B-42E1-B488-393F9FEE9904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26BDBA76-496B-42E1-B488-393F9FEE9904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26BDBA76-496B-42E1-B488-393F9FEE9904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26BDBA76-496B-42E1-B488-393F9FEE9904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5C98F40-A0C4-4B10-9E40-E42EC424CE16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5C98F40-A0C4-4B10-9E40-E42EC424CE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5C98F40-A0C4-4B10-9E40-E42EC424CE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5C98F40-A0C4-4B10-9E40-E42EC424CE16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

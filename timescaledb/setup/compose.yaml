@@ -1,0 +1,20 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb-ha:pg17
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: MyInitialAdminPassword
+    networks:
+      - timescalenet
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 8080:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: sam@helloworld.com
+      PGADMIN_DEFAULT_PASSWORD: MyInitialAdminPassword
+    networks:
+      - timescalenet
+networks:
+  timescalenet:
