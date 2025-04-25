@@ -9,12 +9,10 @@ using Microsoft.Extensions.Logging;
 
 namespace InfluxDbWorker;
 
-public class InfluxDbTimeseriesImporter(ILogger<InfluxDbTimeseriesImporter> logger, IConfiguration configuration)
-    : ITimeseriesImporter
+public class InfluxDbDirectTimeseriesImporter(ILogger<InfluxDbDirectTimeseriesImporter> logger, IConfiguration configuration) : ITimeseriesImporter
 {
     private InfluxDBClient? client;
-    private WriteApi? writeApi;
-
+    private WriteApiAsync? writeApi;
 
     public Task ImportDataAsync(string fileName, IEnumerable<MeterReading> readings)
     {
@@ -23,13 +21,7 @@ public class InfluxDbTimeseriesImporter(ILogger<InfluxDbTimeseriesImporter> logg
             EnsureConnection();
             foreach (var meterReading in readings)
             {
-                writeApi.WritePoints(meterReading.Readings.Select(r => PointData.Measurement(meterReading.MeasurementType)
-                    .Tag("meterid", meterReading.MeterId)
-                    .Field("value", r.Value)
-                    .Timestamp(r.Timestamp, WritePrecision.S)).ToArray(), configuration["ContainerName"], "docs");
-                writeApi.Flush();
-
-                // writeApi.WriteRecord(InfluxDbHelper.GetInfluxLine(meterReading), WritePrecision.Ns, configuration["ContainerName"], "docs");
+                writeApi.WriteRecordAsync(InfluxDbHelper.GetInfluxLine(meterReading), WritePrecision.Ns, configuration["ContainerName"], "docs");
             }
 
         }
@@ -43,12 +35,11 @@ public class InfluxDbTimeseriesImporter(ILogger<InfluxDbTimeseriesImporter> logg
 
     public Task CloseAsync()
     {
-        writeApi?.Dispose();
         client?.Dispose();
         return Task.CompletedTask;
     }
 
-    private WriteApi EnsureConnection()
+    private WriteApiAsync EnsureConnection()
     {
         if (client == null)
         {
@@ -57,9 +48,8 @@ public class InfluxDbTimeseriesImporter(ILogger<InfluxDbTimeseriesImporter> logg
 
         if (writeApi == null)
         {
-            writeApi = client.GetWriteApi();
+            writeApi = client.GetWriteApiAsync();
         }
-
         return writeApi;
     }
 }

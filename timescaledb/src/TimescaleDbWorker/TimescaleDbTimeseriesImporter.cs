@@ -2,12 +2,13 @@ using System.Globalization;
 using System.Text;
 using Meterdata;
 using Meterdata.Extensions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 
 namespace TimescaleDbWorker;
 
-public class TimescaleDbTimeseriesImporter(ILogger<TimescaleDbTimeseriesImporter> logger) : ITimeseriesImporter
+public class TimescaleDbTimeseriesImporter(ILogger<TimescaleDbTimeseriesImporter> logger, IConfiguration configuration) : ITimeseriesImporter
 {
     private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1);
 
@@ -20,7 +21,7 @@ public class TimescaleDbTimeseriesImporter(ILogger<TimescaleDbTimeseriesImporter
         try
         {
             await using var writer = await con.BeginBinaryImportAsync(
-                "COPY lmc.meter_measurements5 (meter_id, measure_time, consumption, label) FROM STDIN (FORMAT BINARY)");
+                $"COPY lmc.{configuration["ContainerName"]} (meter_id, measure_time, consumption, label) FROM STDIN (FORMAT BINARY)");
             foreach (var reading in readings)
             {
                 foreach (var measurement in reading.Readings.Where(r => !r.Timestamp.IsInfiniteOrEmpty()))
@@ -47,6 +48,12 @@ public class TimescaleDbTimeseriesImporter(ILogger<TimescaleDbTimeseriesImporter
         {
             logger.LogError(e, "An error occured while importing data: {Message}", e.Message);
         }
+    }
+
+    public Task CloseAsync()
+    {
+        connection?.Close();
+        return Task.CompletedTask;
     }
 
     private async Task<NpgsqlConnection> EnsureConnectionAsync()

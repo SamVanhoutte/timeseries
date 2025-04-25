@@ -83,3 +83,15 @@ SELECT *
 FROM lmc.daily_total_consumption
 WHERE bucket >= now() - INTERVAL '7 days'
 ```
+
+### Upserting data
+
+Upserting data should be done, when using UNIQUE indexes.  And it's done with a `INSERT ... ON CONFLICT` approach.
+
+```SQL
+INSERT INTO conditions
+  VALUES ('2017-07-28 11:42:42.846621+00', 'office', 70.2, 50.1)
+  ON CONFLICT (time, location) DO UPDATE
+    SET temperature = excluded.temperature,
+        humidity = excluded.humidity;
+```

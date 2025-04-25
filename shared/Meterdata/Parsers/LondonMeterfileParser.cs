@@ -11,6 +11,8 @@ public class LondonMeterfileParser : IMeterfileParser
     private const string FirstTimeStamp = "2011-11-24T00:00:00Z";
     private const string LastTimeStamp = "2013-02-25T00:00:00Z";
     
+    public bool SingleFile => false;
+
     public async Task<(long, long)> ParseMeterDataAsync(string filePath, Func<MeterReading, Task> processData)
     {
         var totalRecords = 0;

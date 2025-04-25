@@ -7,6 +7,7 @@ namespace Meterdata.Parsers;
 
 public class SwissMeterfileParser : IMeterfileParser
 {
+    public bool SingleFile => false;
     public async Task<(long, long)> ParseMeterDataAsync(string filePath, Func<MeterReading, Task> processData)
     {
         var totalRecords = 0;

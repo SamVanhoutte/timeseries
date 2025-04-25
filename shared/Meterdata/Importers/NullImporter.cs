@@ -6,4 +6,9 @@ public class NullImporter : ITimeseriesImporter
     {
         return Task.CompletedTask;
     }
+
+    public Task CloseAsync()
+    {
+        return Task.CompletedTask;
+    }
 }
