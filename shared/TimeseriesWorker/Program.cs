@@ -1,3 +1,4 @@
+using CassandraWorker;
 using InfluxDbWorker;
 using TimescaleDbWorker;
 using Meterdata;
@@ -17,6 +18,8 @@ builder.Services.AddKeyedSingleton<ITimeseriesImporter, NullImporter>("null");
 builder.Services.AddKeyedSingleton<ITimeseriesImporter, TimescaleDbTimeseriesImporter>("timescaledb");
 builder.Services.AddKeyedSingleton<ITimeseriesImporter, InfluxDbTimeseriesImporter>("influxdb");
 builder.Services.AddKeyedSingleton<ITimeseriesImporter, InfluxDbDirectTimeseriesImporter>("influxdbdirect");
+builder.Services.AddKeyedSingleton<ITimeseriesImporter, CassandraTimeseriesImporter>("cassandra");
+
 
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 var host = builder.Build();

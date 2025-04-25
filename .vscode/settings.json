@@ -1,0 +1,9 @@
+{
+    "cassandraWorkbench.activeClusterName": "Local password",
+    "cassandraWorkbench.activeKeyspace": [
+        [
+            "Cluster AllowAllAuthenticator",
+            "ratinglocal"
+        ]
+    ]
+}

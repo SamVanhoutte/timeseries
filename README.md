@@ -18,5 +18,5 @@ The following table shows the different things that were compared, and allow to 
 | Database | Import duration | Upsert method | Scalability | Query performance | Details |
 |---|---|---|---|---|---|
 | InfluxDb | 134 sec | Silent overwrite | - | - | [Details](./influxdb/influxdb.cmd) |
-| TimescaleDb | 122 sec | - | - | - | [Details](./timescaledb/timescaledb.cmd) |
+| TimescaleDb | 122 sec | Insert 'on conflict' | - | - | [Details](./timescaledb/timescaledb.cmd) |
 | CassandraDb | - | - | - | - | [Details](./cassandradb/cassandradb.cmd) |

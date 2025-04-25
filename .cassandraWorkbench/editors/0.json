@@ -1,0 +1,1 @@
+{"id":"lK4FuAb761zRnMis","body":"-- modify keyspace name\nCREATE KEYSPACE keyspace_name\n\tWITH REPLICATION = {\n\t\t'class': 'SimpleStrategy',\n\t\t'replication_factor': 1\n\t}\n\tAND DURABLE_WRITES = true;\n","filename":"script_1.cql","clusterName":"Local password","keyspace":null,"source":"action","modified":true}

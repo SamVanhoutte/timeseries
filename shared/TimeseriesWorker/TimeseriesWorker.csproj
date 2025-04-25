@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\cassandra\CassandraWorker\CassandraWorker.csproj" />
       <ProjectReference Include="..\..\influxdb\src\InfluxDbWorker\InfluxDbWorker.csproj" />
       <ProjectReference Include="..\..\timescaledb\src\TimescaleDbWorker\TimescaleDbWorker.csproj" />
       <ProjectReference Include="..\Meterdata\Meterdata.csproj" />

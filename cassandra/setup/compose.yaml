@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  cassandra:
+    container_name: cassandra
+    image: cassandra:latest
+    ports:
+      - 9042:9042
+    environment:
+      - CASSANDRA_AUTHENTICATOR=AllowAllAuthenticator
+      - CASSANDRA_AUTHORIZER=AllowAllAuthorizer
+    logging:
+      driver: none
+
+  cassandra-init:
+    container_name: cassandra-setup-keyspace
+    image: cassandra:latest
+    volumes:
+      - ./init-cassandra.sh:/init-cassandra.sh
+    command: /bin/bash /init-cassandra.sh
+    depends_on:
+      - cassandra

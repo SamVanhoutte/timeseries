@@ -15,7 +15,8 @@ Just navigate to http://localhost:8080/ and login with the management credential
 ## Main concepts
 
 - **Hyper table**: a virtual table, built on top of regular PostgreSQL tables, which is optimized for time series data.  It partitions data across time (and optionally space), for faster querying and storage.
-
+- **Chuncks**: chunks represent a temporal partition of a hypertable, each presentation a given timebucket.  
+- **Batches**: when hypertable compression happens
 
 ## Defining our artifacts
 
